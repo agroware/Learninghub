@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>NOVA · modern web browser</title>
-    <!-- Font Awesome for icons (professional, modern) -->
+    <title>AGRO OS · Desktop</title>
+    <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         /* -------------------- RESET & GLOBAL -------------------- */
@@ -13,6 +13,7 @@
             padding: 0;
             box-sizing: border-box;
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            user-select: none;
         }
 
         body {
@@ -25,22 +26,23 @@
             position: relative;
         }
 
-        /* animated background gradient — reactive feel */
+        /* animated desktop wallpaper gradient */
         body::before {
             content: '';
             position: fixed;
             inset: 0;
-            background: radial-gradient(circle at 20% 30%, rgba(98, 0, 255, 0.15), transparent 50%),
-                        radial-gradient(circle at 80% 70%, rgba(0, 212, 255, 0.12), transparent 50%),
+            background: radial-gradient(circle at 20% 30%, rgba(98, 0, 255, 0.18), transparent 55%),
+                        radial-gradient(circle at 80% 70%, rgba(0, 212, 255, 0.15), transparent 55%),
+                        radial-gradient(circle at 50% 50%, rgba(255, 100, 200, 0.06), transparent 70%),
                         #0b0d15;
             z-index: 0;
         }
 
-        /* -------------------- LAUNCH ANIMATION OVERLAY -------------------- */
+        /* -------------------- LAUNCH ANIMATION -------------------- */
         #launch-overlay {
             position: fixed;
             inset: 0;
-            z-index: 100;
+            z-index: 1000;
             background: #0b0d15;
             display: flex;
             flex-direction: column;
@@ -48,39 +50,39 @@
             justify-content: center;
             pointer-events: none;
             animation: overlayFadeOut 1.8s cubic-bezier(0.77, 0, 0.18, 1) forwards;
-            animation-delay: 1.2s;
+            animation-delay: 1.4s;
         }
 
         .launch-logo {
-            font-size: 3.5rem;
-            font-weight: 700;
-            letter-spacing: -0.02em;
+            font-size: 4rem;
+            font-weight: 800;
+            letter-spacing: -0.03em;
             background: linear-gradient(135deg, #ffffff 0%, #a0aaff 80%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            margin-bottom: 1rem;
+            margin-bottom: 0.5rem;
             opacity: 0;
             transform: translateY(20px);
             animation: logoReveal 0.9s cubic-bezier(0.23, 1, 0.32, 1) forwards;
             animation-delay: 0.2s;
-            text-shadow: 0 0 30px rgba(100, 108, 255, 0.3);
+            text-shadow: 0 0 40px rgba(100, 108, 255, 0.35);
         }
 
         .launch-sub {
             color: rgba(255, 255, 255, 0.5);
-            font-size: 1rem;
-            letter-spacing: 0.3em;
+            font-size: 0.9rem;
+            letter-spacing: 0.4em;
             text-transform: uppercase;
             opacity: 0;
             transform: translateY(10px);
             animation: logoReveal 0.8s cubic-bezier(0.23, 1, 0.32, 1) forwards;
-            animation-delay: 0.5s;
+            animation-delay: 0.55s;
         }
 
         .launch-progress {
-            width: 240px;
-            height: 2px;
+            width: 260px;
+            height: 3px;
             background: rgba(255, 255, 255, 0.08);
             border-radius: 10px;
             margin-top: 2.5rem;
@@ -95,22 +97,19 @@
             top: 0;
             height: 100%;
             width: 0%;
-            background: linear-gradient(90deg, #6c6cff, #00d4ff);
+            background: linear-gradient(90deg, #6c6cff, #00d4ff, #ff6b9d);
             border-radius: 10px;
-            animation: progressLoad 1.2s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+            animation: progressLoad 1.3s cubic-bezier(0.65, 0, 0.35, 1) forwards;
             animation-delay: 0.6s;
         }
 
         @keyframes logoReveal {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         @keyframes progressLoad {
             0% { width: 0%; }
-            60% { width: 70%; }
+            60% { width: 72%; }
             100% { width: 100%; }
         }
 
@@ -120,388 +119,507 @@
             100% { opacity: 0; visibility: hidden; }
         }
 
-        /* -------------------- MAIN BROWSER WINDOW -------------------- */
-        .browser-window {
+        /* -------------------- DESKTOP -------------------- */
+        .desktop {
             position: relative;
             z-index: 10;
             width: 96%;
-            max-width: 1400px;
-            height: 90vh;
-            max-height: 900px;
-            background: rgba(18, 20, 30, 0.75);
-            backdrop-filter: blur(30px) saturate(180%);
-            -webkit-backdrop-filter: blur(30px) saturate(180%);
-            border-radius: 24px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255, 255, 255, 0.02);
+            max-width: 1500px;
+            height: 92vh;
+            max-height: 950px;
             display: flex;
             flex-direction: column;
-            overflow: hidden;
+            gap: 0;
             opacity: 0;
             transform: scale(0.98) translateY(20px);
-            animation: windowAppear 1s cubic-bezier(0.23, 1, 0.32, 1) forwards;
-            animation-delay: 1.6s;
+            animation: desktopAppear 1s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+            animation-delay: 1.8s;
         }
 
-        @keyframes windowAppear {
-            to {
-                opacity: 1;
-                transform: scale(1) translateY(0);
-            }
+        @keyframes desktopAppear {
+            to { opacity: 1; transform: scale(1) translateY(0); }
         }
 
-        /* -------------------- TOP BAR (TABS + CONTROLS) -------------------- */
-        .top-bar {
-            display: flex;
-            align-items: center;
-            padding: 12px 16px 0 16px;
-            gap: 8px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            flex-wrap: wrap;
-        }
-
-        .window-controls {
-            display: flex;
-            gap: 8px;
-            margin-right: 8px;
-        }
-
-        .win-dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            transition: 0.2s;
-        }
-
-        .win-dot.red { background: #ff5f56; }
-        .win-dot.yellow { background: #ffbd2e; }
-        .win-dot.green { background: #27c93f; }
-
-        .win-dot:hover { filter: brightness(1.3); }
-
-        .tab-bar {
-            display: flex;
+        /* desktop background frame */
+        .desktop-surface {
             flex: 1;
-            gap: 4px;
-            overflow-x: auto;
-            padding-bottom: 2px;
-        }
-
-        .tab {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 8px 16px;
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 12px 12px 0 0;
-            font-size: 0.85rem;
-            color: rgba(255, 255, 255, 0.7);
-            transition: 0.2s;
-            border: 1px solid transparent;
+            border-radius: 28px 28px 0 0;
+            background: rgba(18, 20, 30, 0.55);
+            backdrop-filter: blur(40px) saturate(180%);
+            -webkit-backdrop-filter: blur(40px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.07);
             border-bottom: none;
-            cursor: default;
-            white-space: nowrap;
-        }
-
-        .tab.active {
-            background: rgba(108, 108, 255, 0.15);
-            color: #ffffff;
-            border-color: rgba(108, 108, 255, 0.3);
-            box-shadow: 0 -4px 12px rgba(108, 108, 255, 0.1);
-        }
-
-        .tab i {
-            font-size: 0.75rem;
-            opacity: 0.7;
-        }
-
-        .tab .close-tab {
-            margin-left: 6px;
-            opacity: 0.5;
-            transition: 0.2s;
-        }
-
-        .tab .close-tab:hover { opacity: 1; }
-
-        .new-tab-btn {
-            background: transparent;
-            border: none;
-            color: rgba(255, 255, 255, 0.5);
-            font-size: 1.2rem;
-            padding: 0 8px;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-
-        .new-tab-btn:hover { color: #fff; }
-
-        /* customization trigger */
-        .customize-btn {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            color: rgba(255, 255, 255, 0.8);
-            border-radius: 30px;
-            padding: 6px 16px;
-            font-size: 0.8rem;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            cursor: pointer;
-            transition: 0.2s;
-            margin-left: auto;
-        }
-
-        .customize-btn:hover {
-            background: rgba(108, 108, 255, 0.2);
-            border-color: rgba(108, 108, 255, 0.5);
-            color: #fff;
-        }
-
-        /* -------------------- NAVIGATION BAR (URL + BUTTONS) -------------------- */
-        .nav-bar {
-            display: flex;
-            align-items: center;
-            padding: 10px 16px;
-            gap: 12px;
-            background: rgba(10, 12, 18, 0.4);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
-        }
-
-        .nav-actions {
-            display: flex;
-            gap: 6px;
-        }
-
-        .nav-btn {
-            background: transparent;
-            border: none;
-            color: rgba(255, 255, 255, 0.6);
-            width: 34px;
-            height: 34px;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-
-        .nav-btn:hover {
-            background: rgba(255, 255, 255, 0.06);
-            color: #fff;
-        }
-
-        .url-bar {
-            flex: 1;
-            display: flex;
-            align-items: center;
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 30px;
-            padding: 0 18px;
-            height: 40px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            transition: 0.2s;
-        }
-
-        .url-bar:focus-within {
-            border-color: rgba(108, 108, 255, 0.6);
-            box-shadow: 0 0 0 3px rgba(108, 108, 255, 0.1);
-            background: rgba(0, 0, 0, 0.5);
-        }
-
-        .url-bar i {
-            color: rgba(255, 255, 255, 0.4);
-            font-size: 0.9rem;
-            margin-right: 10px;
-        }
-
-        .url-input {
-            flex: 1;
-            background: transparent;
-            border: none;
-            color: #fff;
-            font-size: 0.9rem;
-            outline: none;
-        }
-
-        .url-input::placeholder {
-            color: rgba(255, 255, 255, 0.3);
-        }
-
-        .nav-extra {
-            display: flex;
-            gap: 6px;
-        }
-
-        /* -------------------- MAIN CONTENT AREA (REACTIVE / CUSTOMIZABLE) -------------------- */
-        .content-area {
-            flex: 1;
-            display: flex;
-            overflow: hidden;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.8), inset 0 0 0 1px rgba(255, 255, 255, 0.02);
             position: relative;
-        }
-
-        .sidebar {
-            width: 56px;
-            background: rgba(10, 12, 18, 0.5);
-            border-right: 1px solid rgba(255, 255, 255, 0.03);
+            overflow: hidden;
             display: flex;
             flex-direction: column;
+        }
+
+        /* top bar of OS – status bar */
+        .os-statusbar {
+            display: flex;
             align-items: center;
-            padding: 16px 0;
+            justify-content: space-between;
+            padding: 10px 24px;
+            background: rgba(10, 12, 18, 0.6);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(10px);
+        }
+
+        .status-left {
+            display: flex;
+            align-items: center;
             gap: 20px;
         }
 
-        .sidebar-icon {
-            color: rgba(255, 255, 255, 0.4);
-            font-size: 1.2rem;
-            width: 36px;
-            height: 36px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 10px;
-            transition: 0.2s;
-            cursor: pointer;
-        }
-
-        .sidebar-icon:hover {
-            background: rgba(108, 108, 255, 0.15);
-            color: #fff;
-        }
-
-        .sidebar-icon.active {
-            background: rgba(108, 108, 255, 0.25);
-            color: #fff;
-            box-shadow: 0 0 12px rgba(108, 108, 255, 0.2);
-        }
-
-        .main-panel {
-            flex: 1;
-            padding: 24px;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-            gap: 24px;
-            background: rgba(18, 20, 28, 0.3);
-        }
-
-        /* reactive cards / widgets — customizable & dynamic */
-        .widget-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 16px;
-        }
-
-        .widget {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 20px;
-            padding: 20px;
-            transition: all 0.25s cubic-bezier(0.23, 1, 0.32, 1);
-            cursor: default;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-        }
-
-        .widget:hover {
-            transform: translateY(-4px) scale(1.01);
-            border-color: rgba(108, 108, 255, 0.3);
-            background: rgba(108, 108, 255, 0.05);
-            box-shadow: 0 18px 30px -10px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(108, 108, 255, 0.2);
-        }
-
-        .widget-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 12px;
-            color: rgba(255, 255, 255, 0.5);
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-
-        .widget-value {
-            font-size: 2rem;
-            font-weight: 600;
-            background: linear-gradient(135deg, #fff, #b0b8ff);
+        .status-logo {
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            background: linear-gradient(135deg, #ffffff, #a0aaff);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            line-height: 1.2;
+            font-size: 1rem;
         }
 
-        .widget-sub {
-            color: rgba(255, 255, 255, 0.4);
-            font-size: 0.8rem;
-            margin-top: 6px;
-        }
-
-        /* dynamic customization panel */
-        .customization-panel {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            border-radius: 20px;
-            padding: 20px;
+        .status-right {
             display: flex;
-            flex-wrap: wrap;
             align-items: center;
             gap: 20px;
-            transition: 0.2s;
         }
 
-        .customization-panel h3 {
-            font-size: 0.9rem;
-            font-weight: 500;
-            color: rgba(255, 255, 255, 0.7);
-            letter-spacing: 0.02em;
+        .battery-indicator {
             display: flex;
             align-items: center;
             gap: 8px;
         }
 
-        .theme-buttons {
-            display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
+        .battery-level {
+            width: 38px;
+            height: 18px;
+            border: 1.5px solid rgba(255, 255, 255, 0.5);
+            border-radius: 4px;
+            position: relative;
+            padding: 1.5px;
         }
 
-        .theme-option {
-            width: 36px;
-            height: 36px;
-            border-radius: 12px;
-            border: 2px solid transparent;
-            cursor: pointer;
-            transition: 0.2s;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        .battery-level::after {
+            content: '';
+            position: absolute;
+            right: -4px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 3px;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 0 2px 2px 0;
         }
 
-        .theme-option:hover {
-            transform: scale(1.1);
-            border-color: rgba(255, 255, 255, 0.5);
+        .battery-fill {
+            height: 100%;
+            width: 78%;
+            background: linear-gradient(90deg, #27c93f, #6cff8a);
+            border-radius: 2px;
+            transition: width 0.3s;
         }
 
-        .theme-option.active {
-            border-color: #6c6cff;
-            box-shadow: 0 0 0 3px rgba(108, 108, 255, 0.3);
+        .battery-fill.low {
+            background: linear-gradient(90deg, #ff5f56, #ff8a80);
         }
 
-        /* dynamic url navigation (simulated) */
-        .nav-hint {
+        .battery-percent {
             font-size: 0.75rem;
-            color: rgba(255, 255, 255, 0.3);
+            color: rgba(255, 255, 255, 0.7);
+            font-weight: 500;
+        }
+
+        .clock {
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.9);
+            font-variant-numeric: tabular-nums;
+            letter-spacing: 0.02em;
+        }
+
+        .status-right .fa-wifi,
+        .status-right .fa-volume-high {
+            opacity: 0.7;
+            font-size: 0.85rem;
+        }
+
+        /* app grid + desktop area */
+        .desktop-main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 24px;
+            gap: 24px;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        /* browser bar – DuckDuckGo */
+        .browser-bar {
             display: flex;
             align-items: center;
-            gap: 6px;
-            padding: 0 8px;
+            gap: 12px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 40px;
+            padding: 4px 6px 4px 20px;
+            backdrop-filter: blur(10px);
+            max-width: 700px;
+            margin: 0 auto;
+            width: 100%;
+            transition: 0.2s;
         }
 
-        /* admin password modal */
+        .browser-bar:focus-within {
+            border-color: rgba(108, 108, 255, 0.6);
+            box-shadow: 0 0 0 4px rgba(108, 108, 255, 0.1);
+        }
+
+        .ddg-icon {
+            color: #de5833;
+            font-size: 1.1rem;
+            margin-right: 4px;
+        }
+
+        .browser-input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            outline: none;
+            color: #fff;
+            font-size: 0.9rem;
+            padding: 10px 0;
+        }
+
+        .browser-input::placeholder {
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        .browser-actions {
+            display: flex;
+            gap: 4px;
+        }
+
+        .browser-btn {
+            background: transparent;
+            border: none;
+            color: rgba(255, 255, 255, 0.5);
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .browser-btn:hover {
+            background: rgba(255, 255, 255, 0.08);
+            color: #fff;
+        }
+
+        /* section title */
+        .section-title {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: rgba(255, 255, 255, 0.35);
+            padding-left: 4px;
+            margin-bottom: 4px;
+        }
+
+        /* application grid */
+        .app-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+            gap: 20px;
+            padding: 8px 4px;
+        }
+
+        .app-icon {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: all 0.25s cubic-bezier(0.23, 1, 0.32, 1);
+            border-radius: 18px;
+            padding: 12px 6px;
+            position: relative;
+        }
+
+        .app-icon:hover {
+            background: rgba(255, 255, 255, 0.06);
+            transform: translateY(-6px);
+        }
+
+        .app-icon:active {
+            transform: scale(0.95);
+        }
+
+        .app-icon-box {
+            width: 64px;
+            height: 64px;
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            color: #fff;
+            box-shadow: 0 10px 22px rgba(0, 0, 0, 0.5), inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+            transition: 0.25s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .app-icon:hover .app-icon-box {
+            box-shadow: 0 16px 32px rgba(0, 0, 0, 0.6), inset 0 0 0 1px rgba(255, 255, 255, 0.15);
+        }
+
+        .app-name {
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.8);
+            font-weight: 500;
+            text-align: center;
+            letter-spacing: 0.01em;
+        }
+
+        /* App specific colors */
+        .app-icon-box.youtube { background: linear-gradient(145deg, #ff0000, #cc0000); }
+        .app-icon-box.crossy { background: linear-gradient(145deg, #4caf50, #2e7d32); }
+        .app-icon-box.tiktok { background: linear-gradient(145deg, #010101, #2d2d2d); }
+        .app-icon-box.music { background: linear-gradient(145deg, #fa57c1, #d43b9c); }
+        .app-icon-box.calc { background: linear-gradient(145deg, #6c6cff, #4a4aff); }
+        .app-icon-box.settings { background: linear-gradient(145deg, #5c5c7a, #3a3a4a); }
+        .app-icon-box.files { background: linear-gradient(145deg, #00bcd4, #0097a7); }
+        .app-icon-box.terminal { background: linear-gradient(145deg, #1a1a2e, #0f0f1a); }
+
+        /* app window overlay (opened app) */
+        .app-window {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.9);
+            width: 90%;
+            max-width: 700px;
+            height: 80%;
+            max-height: 520px;
+            background: rgba(20, 22, 32, 0.98);
+            backdrop-filter: blur(30px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 50px 100px rgba(0, 0, 0, 0.9);
+            z-index: 500;
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+            opacity: 0;
+            transition: opacity 0.3s, transform 0.3s;
+        }
+
+        .app-window.active {
+            display: flex;
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .app-window-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 20px;
+            background: rgba(0, 0, 0, 0.3);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .app-window-title {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .app-window-controls {
+            display: flex;
+            gap: 8px;
+        }
+
+        .app-win-dot {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .app-win-dot.close { background: #ff5f56; }
+        .app-win-dot.minimize { background: #ffbd2e; }
+        .app-win-dot.maximize { background: #27c93f; }
+        .app-win-dot:hover { filter: brightness(1.3); }
+
+        .app-window-body {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            color: rgba(255, 255, 255, 0.8);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            gap: 16px;
+        }
+
+        .app-placeholder-icon {
+            font-size: 4rem;
+            opacity: 0.5;
+        }
+
+        .app-window-body p {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.5);
+            max-width: 400px;
+        }
+
+        /* calculator specific */
+        .calc-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            width: 100%;
+            max-width: 320px;
+        }
+
+        .calc-btn {
+            background: rgba(255, 255, 255, 0.06);
+            border: none;
+            border-radius: 14px;
+            padding: 18px 10px;
+            font-size: 1.1rem;
+            color: #fff;
+            cursor: pointer;
+            transition: 0.15s;
+            font-weight: 500;
+        }
+
+        .calc-btn:hover {
+            background: rgba(108, 108, 255, 0.25);
+        }
+
+        .calc-btn.op {
+            background: rgba(108, 108, 255, 0.3);
+            color: #fff;
+        }
+
+        .calc-btn.clear {
+            background: rgba(255, 95, 86, 0.25);
+        }
+
+        .calc-display {
+            width: 100%;
+            max-width: 320px;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 16px;
+            padding: 20px;
+            text-align: right;
+            font-size: 2rem;
+            font-weight: 300;
+            color: #fff;
+            margin-bottom: 8px;
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            letter-spacing: 0.02em;
+            overflow-x: auto;
+        }
+
+        /* dock at bottom */
+        .os-dock {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            padding: 12px 24px;
+            background: rgba(10, 12, 18, 0.7);
+            backdrop-filter: blur(30px);
+            border-radius: 0 0 28px 28px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-top: none;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+        }
+
+        .dock-item {
+            width: 44px;
+            height: 44px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            color: rgba(255, 255, 255, 0.7);
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            cursor: pointer;
+            transition: all 0.25s cubic-bezier(0.23, 1, 0.32, 1);
+            position: relative;
+        }
+
+        .dock-item:hover {
+            transform: translateY(-8px) scale(1.1);
+            background: rgba(108, 108, 255, 0.25);
+            color: #fff;
+            border-color: rgba(108, 108, 255, 0.5);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.5);
+        }
+
+        .dock-item.active {
+            background: rgba(108, 108, 255, 0.35);
+            color: #fff;
+            border-color: rgba(108, 108, 255, 0.7);
+            box-shadow: 0 0 20px rgba(108, 108, 255, 0.3);
+        }
+
+        /* admin badge (OS level) */
+        .admin-indicator {
+            font-size: 0.65rem;
+            padding: 2px 10px;
+            border-radius: 30px;
+            background: rgba(108, 108, 255, 0.2);
+            border: 1px solid rgba(108, 108, 255, 0.4);
+            color: #a0aaff;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            display: none;
+        }
+
+        .admin-indicator.visible {
+            display: inline-block;
+        }
+
+        /* hint */
+        .os-hint {
+            font-size: 0.7rem;
+            color: rgba(255, 255, 255, 0.3);
+            text-align: center;
+            padding: 6px;
+            letter-spacing: 0.02em;
+        }
+
+        /* admin modal (same as before) */
         .admin-modal {
             position: fixed;
             inset: 0;
-            z-index: 200;
+            z-index: 2000;
             background: rgba(0, 0, 0, 0.7);
             backdrop-filter: blur(8px);
             display: none;
@@ -509,9 +627,7 @@
             justify-content: center;
         }
 
-        .admin-modal.active {
-            display: flex;
-        }
+        .admin-modal.active { display: flex; }
 
         .modal-card {
             background: rgba(24, 26, 36, 0.95);
@@ -526,14 +642,8 @@
         }
 
         @keyframes modalPop {
-            from {
-                opacity: 0;
-                transform: scale(0.95) translateY(10px);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1) translateY(0);
-            }
+            from { opacity: 0; transform: scale(0.95) translateY(10px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
         }
 
         .modal-card h2 {
@@ -612,178 +722,154 @@
             display: none;
         }
 
-        /* admin badge */
-        .admin-badge {
-            background: rgba(108, 108, 255, 0.2);
-            border: 1px solid rgba(108, 108, 255, 0.4);
-            color: #a0aaff;
-            font-size: 0.65rem;
-            padding: 2px 10px;
-            border-radius: 30px;
-            margin-left: 8px;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            display: none;
-        }
+        /* scrollbar */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.1); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.2); }
 
-        .admin-badge.visible {
-            display: inline-block;
-        }
-
-        /* scrollbar styling */
-        ::-webkit-scrollbar {
-            width: 6px;
-            height: 6px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: transparent;
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: rgba(255, 255, 255, 0.2);
-        }
-
-        /* small responsive */
+        /* responsive */
         @media (max-width: 700px) {
-            .browser-window {
-                width: 100%;
-                height: 100vh;
-                max-height: none;
-                border-radius: 0;
-            }
-            .sidebar {
-                display: none;
-            }
+            .desktop { width: 100%; height: 100vh; max-height: none; }
+            .desktop-surface { border-radius: 0; }
+            .os-dock { border-radius: 0; }
+            .app-grid { grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); gap: 14px; }
+            .app-icon-box { width: 52px; height: 52px; font-size: 1.4rem; }
+            .app-name { font-size: 0.65rem; }
+            .browser-bar { max-width: 100%; }
+        }
+
+        @media (max-width: 480px) {
+            .app-grid { grid-template-columns: repeat(4, 1fr); gap: 10px; }
+            .os-statusbar { padding: 8px 14px; font-size: 0.7rem; }
+            .status-right { gap: 10px; }
+            .battery-percent { display: none; }
         }
     </style>
 </head>
 <body>
 
-    <!-- LAUNCH ANIMATION OVERLAY -->
+    <!-- LAUNCH ANIMATION -->
     <div id="launch-overlay">
-        <div class="launch-logo">NOVA</div>
-        <div class="launch-sub">web browser</div>
+        <div class="launch-logo">AGRO</div>
+        <div class="launch-sub">operating system</div>
         <div class="launch-progress"></div>
     </div>
 
-    <!-- MAIN BROWSER WINDOW -->
-    <div class="browser-window" id="browserWindow">
+    <!-- DESKTOP -->
+    <div class="desktop" id="desktop">
+        <div class="desktop-surface">
+            <!-- OS STATUS BAR -->
+            <div class="os-statusbar">
+                <div class="status-left">
+                    <span class="status-logo"><i class="fas fa-microchip"></i> AGRO OS</span>
+                    <span class="admin-indicator" id="adminIndicator"><i class="fas fa-shield-hal"></i> admin</span>
+                </div>
+                <div class="status-right">
+                    <i class="fas fa-wifi"></i>
+                    <i class="fas fa-volume-high"></i>
+                    <div class="battery-indicator">
+                        <div class="battery-level">
+                            <div class="battery-fill" id="batteryFill"></div>
+                        </div>
+                        <span class="battery-percent" id="batteryPercent">78%</span>
+                    </div>
+                    <span class="clock" id="clock">--:--</span>
+                </div>
+            </div>
 
-        <!-- TOP BAR: window controls + tabs + customize -->
-        <div class="top-bar">
-            <div class="window-controls">
-                <div class="win-dot red"></div>
-                <div class="win-dot yellow"></div>
-                <div class="win-dot green"></div>
-            </div>
-            <div class="tab-bar" id="tabBar">
-                <div class="tab active">
-                    <i class="fas fa-globe"></i> Home
-                    <span class="close-tab"><i class="fas fa-times"></i></span>
+            <!-- DESKTOP MAIN -->
+            <div class="desktop-main" id="desktopMain">
+                <!-- DUCKDUCKGO BROWSER BAR -->
+                <div class="browser-bar">
+                    <i class="fas fa-duck ddg-icon"></i>
+                    <input type="text" class="browser-input" id="browserInput" placeholder="Search with DuckDuckGo or enter URL...">
+                    <div class="browser-actions">
+                        <button class="browser-btn" id="browserSearchBtn"><i class="fas fa-magnifying-glass"></i></button>
+                        <button class="browser-btn" id="browserRefreshBtn"><i class="fas fa-rotate-right"></i></button>
+                    </div>
                 </div>
-                <div class="tab">
-                    <i class="fas fa-code"></i> GitHub
-                    <span class="close-tab"><i class="fas fa-times"></i></span>
+
+                <!-- APP GRID -->
+                <div>
+                    <div class="section-title"><i class="fas fa-grid-2"></i> Applications</div>
+                    <div class="app-grid" id="appGrid">
+                        <!-- YouTube -->
+                        <div class="app-icon" data-app="youtube">
+                            <div class="app-icon-box youtube"><i class="fab fa-youtube"></i></div>
+                            <span class="app-name">YouTube</span>
+                        </div>
+                        <!-- Crossy Road -->
+                        <div class="app-icon" data-app="crossy">
+                            <div class="app-icon-box crossy"><i class="fas fa-dragon"></i></div>
+                            <span class="app-name">Crossy Road</span>
+                        </div>
+                        <!-- TikTok -->
+                        <div class="app-icon" data-app="tiktok">
+                            <div class="app-icon-box tiktok"><i class="fab fa-tiktok"></i></div>
+                            <span class="app-name">TikTok</span>
+                        </div>
+                        <!-- Apple Music -->
+                        <div class="app-icon" data-app="music">
+                            <div class="app-icon-box music"><i class="fab fa-apple"></i></div>
+                            <span class="app-name">Apple Music</span>
+                        </div>
+                        <!-- Calculator -->
+                        <div class="app-icon" data-app="calc">
+                            <div class="app-icon-box calc"><i class="fas fa-calculator"></i></div>
+                            <span class="app-name">Calculator</span>
+                        </div>
+                        <!-- Files (extra) -->
+                        <div class="app-icon" data-app="files">
+                            <div class="app-icon-box files"><i class="fas fa-folder"></i></div>
+                            <span class="app-name">Files</span>
+                        </div>
+                        <!-- Terminal (extra) -->
+                        <div class="app-icon" data-app="terminal">
+                            <div class="app-icon-box terminal"><i class="fas fa-terminal"></i></div>
+                            <span class="app-name">Terminal</span>
+                        </div>
+                        <!-- Settings -->
+                        <div class="app-icon" data-app="settings">
+                            <div class="app-icon-box settings"><i class="fas fa-gear"></i></div>
+                            <span class="app-name">Settings</span>
+                        </div>
+                    </div>
                 </div>
-                <button class="new-tab-btn" id="newTabBtn"><i class="fas fa-plus"></i></button>
+
+                <!-- hint -->
+                <div class="os-hint" id="osHint"><i class="fas fa-circle-info"></i> Double-click apps to open · Click admin shield to unlock</div>
             </div>
-            <button class="customize-btn" id="customizeToggle">
-                <i class="fas fa-sliders-h"></i> Customize
-            </button>
-            <span class="admin-badge" id="adminBadge"><i class="fas fa-lock-open"></i> Admin</span>
         </div>
 
-        <!-- NAVIGATION BAR -->
-        <div class="nav-bar">
-            <div class="nav-actions">
-                <button class="nav-btn" id="backBtn"><i class="fas fa-arrow-left"></i></button>
-                <button class="nav-btn" id="forwardBtn"><i class="fas fa-arrow-right"></i></button>
-                <button class="nav-btn" id="refreshBtn"><i class="fas fa-rotate-right"></i></button>
-            </div>
-            <div class="url-bar">
-                <i class="fas fa-lock" id="urlLockIcon"></i>
-                <input type="text" class="url-input" id="urlInput" value="https://github.com/novabrowser" placeholder="Search or enter website">
-            </div>
-            <div class="nav-extra">
-                <button class="nav-btn" id="adminAccessBtn"><i class="fas fa-user-shield"></i></button>
-                <button class="nav-btn"><i class="fas fa-star"></i></button>
-                <button class="nav-btn"><i class="fas fa-ellipsis"></i></button>
-            </div>
-        </div>
-
-        <!-- CONTENT: sidebar + main reactive panel -->
-        <div class="content-area">
-            <!-- Sidebar with dynamic icons -->
-            <div class="sidebar">
-                <div class="sidebar-icon active" data-view="home"><i class="fas fa-home"></i></div>
-                <div class="sidebar-icon" data-view="explore"><i class="fas fa-compass"></i></div>
-                <div class="sidebar-icon" data-view="bookmarks"><i class="fas fa-bookmark"></i></div>
-                <div class="sidebar-icon" data-view="history"><i class="fas fa-clock-rotate-left"></i></div>
-                <div class="sidebar-icon" data-view="settings"><i class="fas fa-gear"></i></div>
-            </div>
-
-            <!-- Main reactive content -->
-            <div class="main-panel" id="mainPanel">
-                <!-- Dashboard widgets (reactive on hover & customization) -->
-                <div class="widget-grid" id="widgetGrid">
-                    <div class="widget">
-                        <div class="widget-header">
-                            <span>ACTIVE TABS</span>
-                            <i class="fas fa-window-restore" style="opacity:0.6;"></i>
-                        </div>
-                        <div class="widget-value" id="tabCount">2</div>
-                        <div class="widget-sub">open sessions</div>
-                    </div>
-                    <div class="widget">
-                        <div class="widget-header">
-                            <span>MEMORY</span>
-                            <i class="fas fa-microchip" style="opacity:0.6;"></i>
-                        </div>
-                        <div class="widget-value">42%</div>
-                        <div class="widget-sub">1.2 GB of 2.8 GB</div>
-                    </div>
-                    <div class="widget">
-                        <div class="widget-header">
-                            <span>NETWORK</span>
-                            <i class="fas fa-wifi" style="opacity:0.6;"></i>
-                        </div>
-                        <div class="widget-value">5.2 <span style="font-size:1rem;">ms</span></div>
-                        <div class="widget-sub">ping · stable</div>
-                    </div>
-                </div>
-
-                <!-- Customization panel (hidden by default, toggled) -->
-                <div class="customization-panel" id="customizationPanel" style="display: none;">
-                    <h3><i class="fas fa-palette"></i> Theme accent</h3>
-                    <div class="theme-buttons" id="themeButtons">
-                        <div class="theme-option active" style="background: linear-gradient(135deg, #6c6cff, #4a4aff);" data-theme="indigo"></div>
-                        <div class="theme-option" style="background: linear-gradient(135deg, #00d4ff, #0088ff);" data-theme="blue"></div>
-                        <div class="theme-option" style="background: linear-gradient(135deg, #ff6b9d, #ff3b6f);" data-theme="pink"></div>
-                        <div class="theme-option" style="background: linear-gradient(135deg, #00e5a0, #00b87a);" data-theme="green"></div>
-                        <div class="theme-option" style="background: linear-gradient(135deg, #ffb347, #ff8c00);" data-theme="amber"></div>
-                    </div>
-                    <h3 style="margin-left: auto;"><i class="fas fa-wand-magic"></i> Reactive elements</h3>
-                    <div style="display: flex; gap: 12px;">
-                        <button class="modal-btn secondary" style="padding: 8px 16px;" id="pulseBtn">Pulse effect</button>
-                        <button class="modal-btn secondary" style="padding: 8px 16px;" id="resetCustom">Reset</button>
-                    </div>
-                </div>
-
-                <!-- Dynamic info line (reactive feedback) -->
-                <div class="nav-hint" id="navHint">
-                    <i class="fas fa-circle-info"></i> Ready · click anywhere to interact
-                </div>
-            </div>
+        <!-- DOCK (bottom bar) -->
+        <div class="os-dock" id="dock">
+            <div class="dock-item" data-app="youtube"><i class="fab fa-youtube"></i></div>
+            <div class="dock-item" data-app="crossy"><i class="fas fa-dragon"></i></div>
+            <div class="dock-item" data-app="tiktok"><i class="fab fa-tiktok"></i></div>
+            <div class="dock-item" data-app="music"><i class="fab fa-apple"></i></div>
+            <div class="dock-item" data-app="calc"><i class="fas fa-calculator"></i></div>
+            <div class="dock-item" data-app="settings"><i class="fas fa-gear"></i></div>
+            <div class="dock-item" id="adminDockBtn" style="margin-left: 12px;"><i class="fas fa-user-shield"></i></div>
         </div>
     </div>
 
-    <!-- ADMIN PASSWORD MODAL -->
+    <!-- APP WINDOW OVERLAY -->
+    <div class="app-window" id="appWindow">
+        <div class="app-window-header">
+            <div class="app-window-title" id="appWindowTitle"><i class="fas fa-window-maximize"></i> App</div>
+            <div class="app-window-controls">
+                <div class="app-win-dot minimize" id="winMinimize"></div>
+                <div class="app-win-dot maximize" id="winMaximize"></div>
+                <div class="app-win-dot close" id="winClose"></div>
+            </div>
+        </div>
+        <div class="app-window-body" id="appWindowBody">
+            <!-- dynamic content injected by JS -->
+        </div>
+    </div>
+
+    <!-- ADMIN MODAL -->
     <div class="admin-modal" id="adminModal">
         <div class="modal-card">
             <h2><i class="fas fa-shield-hal"></i> Admin access</h2>
@@ -799,205 +885,383 @@
 
     <script>
         (function() {
-            // ---------- DOM refs ----------
+            // ---------- DOM ----------
             const launchOverlay = document.getElementById('launch-overlay');
-            const browserWindow = document.getElementById('browserWindow');
-            const tabBar = document.getElementById('tabBar');
-            const newTabBtn = document.getElementById('newTabBtn');
-            const customizeToggle = document.getElementById('customizeToggle');
-            const customizationPanel = document.getElementById('customizationPanel');
-            const themeOptions = document.querySelectorAll('.theme-option');
+            const desktop = document.getElementById('desktop');
+            const clockEl = document.getElementById('clock');
+            const batteryFill = document.getElementById('batteryFill');
+            const batteryPercent = document.getElementById('batteryPercent');
+            const browserInput = document.getElementById('browserInput');
+            const browserSearchBtn = document.getElementById('browserSearchBtn');
+            const browserRefreshBtn = document.getElementById('browserRefreshBtn');
+            const osHint = document.getElementById('osHint');
+            const appWindow = document.getElementById('appWindow');
+            const appWindowTitle = document.getElementById('appWindowTitle');
+            const appWindowBody = document.getElementById('appWindowBody');
+            const winClose = document.getElementById('winClose');
+            const winMinimize = document.getElementById('winMinimize');
+            const winMaximize = document.getElementById('winMaximize');
             const adminModal = document.getElementById('adminModal');
-            const adminAccessBtn = document.getElementById('adminAccessBtn');
             const adminSubmit = document.getElementById('adminSubmit');
             const adminCancel = document.getElementById('adminCancel');
             const adminPassword = document.getElementById('adminPassword');
             const adminError = document.getElementById('adminError');
-            const adminBadge = document.getElementById('adminBadge');
-            const tabCountSpan = document.getElementById('tabCount');
-            const urlInput = document.getElementById('urlInput');
-            const navHint = document.getElementById('navHint');
-            const sidebarIcons = document.querySelectorAll('.sidebar-icon');
-            const pulseBtn = document.getElementById('pulseBtn');
-            const resetCustom = document.getElementById('resetCustom');
+            const adminIndicator = document.getElementById('adminIndicator');
+            const adminDockBtn = document.getElementById('adminDockBtn');
 
-            // ---------- State ----------
+            // ---------- STATE ----------
             let isAdmin = false;
-            const ADMIN_PASSWORD = 'nova2025'; // change as needed
-            let tabCounter = 2; // two tabs initially
+            const ADMIN_PASSWORD = 'agro2025';
+            let batteryLevel = 78;
+            let clockInterval;
 
-            // ---------- Launch animation: remove overlay after it finishes ----------
+            // ---------- LAUNCH ----------
             setTimeout(() => {
                 launchOverlay.style.display = 'none';
-            }, 3200); // matches animation total
+            }, 3400);
 
-            // ---------- Reactive tab count update ----------
-            function updateTabCount() {
-                tabCountSpan.textContent = tabCounter;
-                navHint.innerHTML = `<i class="fas fa-check-circle" style="color:#6c6cff;"></i> ${tabCounter} tabs active · reactive UI`;
+            // ---------- CLOCK ----------
+            function updateClock() {
+                const now = new Date();
+                const h = String(now.getHours()).padStart(2, '0');
+                const m = String(now.getMinutes()).padStart(2, '0');
+                clockEl.textContent = `${h}:${m}`;
             }
-            updateTabCount();
+            updateClock();
+            clockInterval = setInterval(updateClock, 1000);
 
-            // ---------- new tab simulation (reactive) ----------
-            newTabBtn.addEventListener('click', () => {
-                if (tabCounter >= 6) {
-                    navHint.innerHTML = `<i class="fas fa-triangle-exclamation" style="color:#ffbd2e;"></i> Maximum 6 tabs for demo`;
-                    return;
+            // ---------- BATTERY ----------
+            function updateBattery(level) {
+                batteryLevel = Math.min(100, Math.max(0, level));
+                batteryFill.style.width = batteryLevel + '%';
+                batteryPercent.textContent = batteryLevel + '%';
+                if (batteryLevel < 20) {
+                    batteryFill.classList.add('low');
+                } else {
+                    batteryFill.classList.remove('low');
                 }
-                const newTab = document.createElement('div');
-                newTab.className = 'tab';
-                newTab.innerHTML = `<i class="fas fa-file"></i> New Tab <span class="close-tab"><i class="fas fa-times"></i></span>`;
-                tabBar.insertBefore(newTab, newTabBtn);
-                tabCounter++;
-                updateTabCount();
-                // reactive hint
-                navHint.innerHTML = `<i class="fas fa-sparkles" style="color:#6c6cff;"></i> New tab created · smooth`;
-                // add close event to new tab
-                attachTabClose(newTab);
-                // deactivate other tabs, activate new one
-                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-                newTab.classList.add('active');
+            }
+            updateBattery(78);
+
+            // Simulate battery drain slowly (reactive)
+            setInterval(() => {
+                if (batteryLevel > 5) {
+                    updateBattery(batteryLevel - 0.5);
+                } else {
+                    updateBattery(100); // cycle for demo
+                }
+            }, 30000); // every 30 seconds
+
+            // ---------- HINT ----------
+            function setHint(text, icon = 'circle-info') {
+                osHint.innerHTML = `<i class="fas fa-${icon}"></i> ${text}`;
+            }
+
+            // ---------- APP LAUNCHER ----------
+            const appContent = {
+                youtube: {
+                    title: '<i class="fab fa-youtube" style="color:#ff0000;"></i> YouTube',
+                    body: `
+                        <div class="app-placeholder-icon" style="color:#ff0000;"><i class="fab fa-youtube"></i></div>
+                        <h2 style="color:#fff;font-weight:500;">YouTube</h2>
+                        <p>Watch videos, music, and more. This is a simulated app window. In a real OS, this would open the YouTube website or application.</p>
+                        <div style="display:flex;gap:10px;margin-top:10px;flex-wrap:wrap;justify-content:center;">
+                            <span style="background:rgba(255,255,255,0.06);padding:6px 14px;border-radius:30px;font-size:0.8rem;">Trending</span>
+                            <span style="background:rgba(255,255,255,0.06);padding:6px 14px;border-radius:30px;font-size:0.8rem;">Music</span>
+                            <span style="background:rgba(255,255,255,0.06);padding:6px 14px;border-radius:30px;font-size:0.8rem;">Live</span>
+                        </div>
+                    `
+                },
+                crossy: {
+                    title: '<i class="fas fa-dragon" style="color:#4caf50;"></i> Crossy Road',
+                    body: `
+                        <div class="app-placeholder-icon" style="color:#4caf50;"><i class="fas fa-dragon"></i></div>
+                        <h2 style="color:#fff;font-weight:500;">Crossy Road</h2>
+                        <p>Hop across roads, rivers, and more. A classic endless arcade game. Click to play (simulated).</p>
+                        <button style="margin-top:12px;padding:12px 32px;border-radius:30px;border:none;background:linear-gradient(135deg,#4caf50,#2e7d32);color:#fff;font-weight:600;cursor:pointer;font-size:1rem;">▶ Play</button>
+                    `
+                },
+                tiktok: {
+                    title: '<i class="fab fa-tiktok"></i> TikTok',
+                    body: `
+                        <div class="app-placeholder-icon"><i class="fab fa-tiktok"></i></div>
+                        <h2 style="color:#fff;font-weight:500;">TikTok</h2>
+                        <p>Short-form videos, trends, and creativity. This is a simulated TikTok feed.</p>
+                        <div style="display:flex;gap:12px;margin-top:12px;">
+                            <span style="background:rgba(255,255,255,0.06);padding:8px 16px;border-radius:30px;font-size:0.8rem;">For You</span>
+                            <span style="background:rgba(255,255,255,0.06);padding:8px 16px;border-radius:30px;font-size:0.8rem;">Following</span>
+                        </div>
+                    `
+                },
+                music: {
+                    title: '<i class="fab fa-apple" style="color:#fa57c1;"></i> Apple Music',
+                    body: `
+                        <div class="app-placeholder-icon" style="color:#fa57c1;"><i class="fab fa-apple"></i></div>
+                        <h2 style="color:#fff;font-weight:500;">Apple Music</h2>
+                        <p>Stream millions of songs. Lossless audio. Spatial audio. Simulated player below.</p>
+                        <div style="width:100%;max-width:300px;background:rgba(0,0,0,0.3);border-radius:16px;padding:16px;margin-top:12px;display:flex;align-items:center;gap:12px;">
+                            <div style="width:48px;height:48px;border-radius:12px;background:linear-gradient(135deg,#fa57c1,#d43b9c);display:flex;align-items:center;justify-content:center;font-size:1.4rem;"><i class="fas fa-music"></i></div>
+                            <div style="flex:1;text-align:left;">
+                                <div style="color:#fff;font-size:0.9rem;font-weight:500;">Midnight City</div>
+                                <div style="color:rgba(255,255,255,0.4);font-size:0.75rem;">M83</div>
+                            </div>
+                            <i class="fas fa-play" style="color:#fff;font-size:1.2rem;cursor:pointer;"></i>
+                        </div>
+                    `
+                },
+                calc: {
+                    title: '<i class="fas fa-calculator" style="color:#6c6cff;"></i> Calculator',
+                    body: `
+                        <div class="calc-display" id="calcDisplay">0</div>
+                        <div class="calc-grid" id="calcGrid">
+                            <button class="calc-btn clear" data-val="C">C</button>
+                            <button class="calc-btn op" data-val="±">±</button>
+                            <button class="calc-btn op" data-val="%">%</button>
+                            <button class="calc-btn op" data-val="/">÷</button>
+                            <button class="calc-btn" data-val="7">7</button>
+                            <button class="calc-btn" data-val="8">8</button>
+                            <button class="calc-btn" data-val="9">9</button>
+                            <button class="calc-btn op" data-val="*">×</button>
+                            <button class="calc-btn" data-val="4">4</button>
+                            <button class="calc-btn" data-val="5">5</button>
+                            <button class="calc-btn" data-val="6">6</button>
+                            <button class="calc-btn op" data-val="-">−</button>
+                            <button class="calc-btn" data-val="1">1</button>
+                            <button class="calc-btn" data-val="2">2</button>
+                            <button class="calc-btn" data-val="3">3</button>
+                            <button class="calc-btn op" data-val="+">+</button>
+                            <button class="calc-btn" data-val="0" style="grid-column:span 2;">0</button>
+                            <button class="calc-btn" data-val=".">.</button>
+                            <button class="calc-btn op" data-val="=">=</button>
+                        </div>
+                    `
+                },
+                files: {
+                    title: '<i class="fas fa-folder" style="color:#00bcd4;"></i> Files',
+                    body: `
+                        <div class="app-placeholder-icon" style="color:#00bcd4;"><i class="fas fa-folder-open"></i></div>
+                        <h2 style="color:#fff;font-weight:500;">Files</h2>
+                        <p>Browse your documents, downloads, and media. This is a simulated file explorer.</p>
+                        <div style="display:flex;gap:12px;margin-top:12px;flex-wrap:wrap;justify-content:center;">
+                            <span style="background:rgba(255,255,255,0.06);padding:8px 16px;border-radius:30px;font-size:0.8rem;">📁 Documents</span>
+                            <span style="background:rgba(255,255,255,0.06);padding:8px 16px;border-radius:30px;font-size:0.8rem;">⬇ Downloads</span>
+                            <span style="background:rgba(255,255,255,0.06);padding:8px 16px;border-radius:30px;font-size:0.8rem;">🖼 Pictures</span>
+                        </div>
+                    `
+                },
+                terminal: {
+                    title: '<i class="fas fa-terminal" style="color:#fff;"></i> Terminal',
+                    body: `
+                        <div style="width:100%;max-width:400px;background:rgba(0,0,0,0.6);border-radius:14px;padding:20px;text-align:left;font-family:'Courier New',monospace;color:#0f0;font-size:0.85rem;">
+                            <div style="color:#0f0;">AGRO OS Terminal v1.0</div>
+                            <div style="color:rgba(255,255,255,0.4);margin-top:8px;">$ <span style="color:#fff;">agro --version</span></div>
+                            <div style="color:#fff;">AGRO OS 1.0.0 (build 2025.01)</div>
+                            <div style="color:rgba(255,255,255,0.4);margin-top:8px;">$ <span style="color:#fff;">_</span><span style="animation:blink 1s infinite;">|</span></div>
+                        </div>
+                    `
+                },
+                settings: {
+                    title: '<i class="fas fa-gear" style="color:#5c5c7a;"></i> Settings',
+                    body: `
+                        <div class="app-placeholder-icon" style="color:#5c5c7a;"><i class="fas fa-gear"></i></div>
+                        <h2 style="color:#fff;font-weight:500;">System Settings</h2>
+                        <p>Configure your AGRO OS experience. Customize themes, wallpaper, and system preferences.</p>
+                        <div style="display:flex;gap:12px;margin-top:12px;">
+                            <span style="background:rgba(108,108,255,0.2);padding:8px 16px;border-radius:30px;font-size:0.8rem;color:#a0aaff;">🎨 Themes</span>
+                            <span style="background:rgba(255,255,255,0.06);padding:8px 16px;border-radius:30px;font-size:0.8rem;">🔔 Notifications</span>
+                        </div>
+                    `
+                }
+            };
+
+            // ---------- APP WINDOW MANAGEMENT ----------
+            function openApp(appId) {
+                const app = appContent[appId];
+                if (!app) return;
+
+                appWindowTitle.innerHTML = app.title;
+                appWindowBody.innerHTML = app.body;
+                appWindow.classList.add('active');
+
+                // if calculator, attach event listeners
+                if (appId === 'calc') {
+                    setTimeout(() => {
+                        initCalculator();
+                    }, 50);
+                }
+            }
+
+            function closeApp() {
+                appWindow.classList.remove('active');
+            }
+
+            // app icon clicks (double click to open, single click hint)
+            document.querySelectorAll('.app-icon').forEach(icon => {
+                icon.addEventListener('dblclick', () => {
+                    const appId = icon.dataset.app;
+                    openApp(appId);
+                    setHint(`Opening ${appId}...`, 'rocket');
+                });
+                // single click feedback
+                icon.addEventListener('click', () => {
+                    const appId = icon.dataset.app;
+                    setHint(`Double-click to open ${appId}`, 'hand-pointer');
+                });
             });
 
-            // tab close handler (reactive)
-            function attachTabClose(tabElement) {
-                const closeBtn = tabElement.querySelector('.close-tab');
-                if (closeBtn) {
-                    closeBtn.addEventListener('click', (e) => {
-                        e.stopPropagation();
-                        if (document.querySelectorAll('.tab').length <= 1) {
-                            navHint.innerHTML = `<i class="fas fa-circle-exclamation" style="color:#ff5f56;"></i> Cannot close the last tab`;
-                            return;
-                        }
-                        if (tabElement.classList.contains('active')) {
-                            // activate another tab
-                            const prevTab = tabElement.previousElementSibling;
-                            if (prevTab && prevTab.classList.contains('tab')) {
-                                prevTab.classList.add('active');
+            // dock clicks – single click opens
+            document.querySelectorAll('.dock-item').forEach(item => {
+                if (item.id === 'adminDockBtn') return;
+                item.addEventListener('click', () => {
+                    const appId = item.dataset.app;
+                    if (appId) {
+                        openApp(appId);
+                        setHint(`Opening ${appId}...`, 'rocket');
+                    }
+                });
+            });
+
+            // window controls
+            winClose.addEventListener('click', closeApp);
+            winMinimize.addEventListener('click', () => {
+                setHint('Window minimized (simulated)', 'window-minimize');
+                closeApp();
+            });
+            winMaximize.addEventListener('click', () => {
+                if (appWindow.style.maxWidth === '900px') {
+                    appWindow.style.maxWidth = '700px';
+                    appWindow.style.maxHeight = '520px';
+                    setHint('Window restored', 'window-restore');
+                } else {
+                    appWindow.style.maxWidth = '900px';
+                    appWindow.style.maxHeight = '680px';
+                    setHint('Window maximized', 'window-maximize');
+                }
+            });
+
+            // close app on ESC
+            window.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && appWindow.classList.contains('active')) {
+                    closeApp();
+                }
+                if (e.key === 'Escape' && adminModal.classList.contains('active')) {
+                    adminModal.classList.remove('active');
+                    adminPassword.value = '';
+                    adminError.style.display = 'none';
+                }
+            });
+
+            // ---------- CALCULATOR LOGIC (simple) ----------
+            function initCalculator() {
+                const display = document.getElementById('calcDisplay');
+                const grid = document.getElementById('calcGrid');
+                if (!display || !grid) return;
+
+                let current = '0';
+                let prev = null;
+                let op = null;
+                let resetNext = false;
+
+                function updateDisplay() {
+                    display.textContent = current;
+                }
+
+                grid.querySelectorAll('.calc-btn').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        const val = btn.dataset.val;
+
+                        if (val === 'C') {
+                            current = '0';
+                            prev = null;
+                            op = null;
+                            resetNext = false;
+                        } else if (val === '±') {
+                            current = String(-parseFloat(current));
+                        } else if (val === '%') {
+                            current = String(parseFloat(current) / 100);
+                        } else if (['+', '-', '*', '/'].includes(val)) {
+                            if (op && !resetNext) {
+                                prev = calculate(prev, current, op);
+                                current = String(prev);
                             } else {
-                                const nextTab = tabElement.nextElementSibling;
-                                if (nextTab && nextTab.classList.contains('tab')) {
-                                    nextTab.classList.add('active');
-                                }
+                                prev = parseFloat(current);
+                            }
+                            op = val;
+                            resetNext = true;
+                        } else if (val === '=') {
+                            if (op && prev !== null) {
+                                current = String(calculate(prev, current, op));
+                                prev = null;
+                                op = null;
+                                resetNext = true;
+                            }
+                        } else if (val === '.') {
+                            if (!current.includes('.')) {
+                                current += '.';
+                            }
+                        } else {
+                            // number
+                            if (resetNext) {
+                                current = val;
+                                resetNext = false;
+                            } else {
+                                current = current === '0' ? val : current + val;
                             }
                         }
-                        tabElement.remove();
-                        tabCounter = document.querySelectorAll('.tab').length;
-                        updateTabCount();
-                        navHint.innerHTML = `<i class="fas fa-check" style="color:#27c93f;"></i> Tab closed`;
+                        updateDisplay();
                     });
-                }
-                // clicking tab activates
-                tabElement.addEventListener('click', (e) => {
-                    if (e.target.closest('.close-tab')) return;
-                    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-                    tabElement.classList.add('active');
                 });
+
+                function calculate(a, b, op) {
+                    a = parseFloat(a);
+                    b = parseFloat(b);
+                    switch (op) {
+                        case '+': return a + b;
+                        case '-': return a - b;
+                        case '*': return a * b;
+                        case '/': return b !== 0 ? a / b : 'Error';
+                        default: return b;
+                    }
+                }
+
+                updateDisplay();
             }
 
-            // attach close handlers to existing tabs
-            document.querySelectorAll('.tab').forEach(tab => attachTabClose(tab));
-
-            // ---------- Customization toggle ----------
-            customizeToggle.addEventListener('click', () => {
-                if (!isAdmin) {
-                    // Show admin modal if not admin (customization locked)
-                    adminModal.classList.add('active');
-                    adminPassword.focus();
-                    navHint.innerHTML = `<i class="fas fa-lock" style="color:#ffbd2e;"></i> Admin password required for customization`;
-                    return;
-                }
-                if (customizationPanel.style.display === 'none' || customizationPanel.style.display === '') {
-                    customizationPanel.style.display = 'flex';
-                    navHint.innerHTML = `<i class="fas fa-palette"></i> Customization panel opened`;
-                } else {
-                    customizationPanel.style.display = 'none';
-                    navHint.innerHTML = `<i class="fas fa-eye-slash"></i> Customization hidden`;
-                }
-            });
-
-            // ---------- Theme switching (reactive) ----------
-            themeOptions.forEach(opt => {
-                opt.addEventListener('click', () => {
-                    if (!isAdmin) {
-                        adminModal.classList.add('active');
-                        navHint.innerHTML = `<i class="fas fa-lock" style="color:#ffbd2e;"></i> Unlock admin to change theme`;
-                        return;
-                    }
-                    themeOptions.forEach(o => o.classList.remove('active'));
-                    opt.classList.add('active');
-                    const theme = opt.dataset.theme;
-                    // reactive accent change (via CSS variables would be better, but we do inline gradient updates)
-                    const accentMap = {
-                        indigo: 'linear-gradient(135deg, #6c6cff, #4a4aff)',
-                        blue: 'linear-gradient(135deg, #00d4ff, #0088ff)',
-                        pink: 'linear-gradient(135deg, #ff6b9d, #ff3b6f)',
-                        green: 'linear-gradient(135deg, #00e5a0, #00b87a)',
-                        amber: 'linear-gradient(135deg, #ffb347, #ff8c00)'
-                    };
-                    // Update elements with accent (simple demo)
-                    document.querySelectorAll('.widget-value, .launch-logo').forEach(el => {
-                        // just to show reactivity we update background gradient of some elements
-                    });
-                    // change the customize button border color as a visual cue
-                    customizeToggle.style.borderColor = theme === 'indigo' ? '#6c6cff' : 
-                                                        theme === 'blue' ? '#00d4ff' : 
-                                                        theme === 'pink' ? '#ff6b9d' : 
-                                                        theme === 'green' ? '#00e5a0' : '#ffb347';
-                    customizeToggle.style.color = '#fff';
-                    navHint.innerHTML = `<i class="fas fa-paintbrush" style="color:#6c6cff;"></i> Theme changed to ${theme}`;
-                });
-            });
-
-            // ---------- Pulse effect (reactive animation) ----------
-            pulseBtn.addEventListener('click', () => {
-                if (!isAdmin) {
-                    adminModal.classList.add('active');
-                    return;
-                }
-                // add a quick pulse animation to widgets
-                const widgets = document.querySelectorAll('.widget');
-                widgets.forEach((w, idx) => {
-                    w.style.transition = 'transform 0.15s, box-shadow 0.15s';
-                    w.style.transform = 'scale(1.04)';
-                    w.style.boxShadow = '0 0 30px rgba(108, 108, 255, 0.4)';
+            // ---------- DUCKDUCKGO BROWSER ----------
+            browserSearchBtn.addEventListener('click', () => {
+                const query = browserInput.value.trim();
+                if (query) {
+                    setHint(`Searching DuckDuckGo for "${query.substring(0, 30)}${query.length > 30 ? '…' : ''}"`, 'spinner');
                     setTimeout(() => {
-                        w.style.transform = 'scale(1)';
-                        w.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.2)';
-                    }, 200 + idx * 50);
-                });
-                navHint.innerHTML = `<i class="fas fa-bolt" style="color:#ffbd2e;"></i> Reactive pulse activated`;
-            });
-
-            // reset customization
-            resetCustom.addEventListener('click', () => {
-                if (!isAdmin) {
-                    adminModal.classList.add('active');
-                    return;
+                        setHint(`DuckDuckGo results for "${query.substring(0, 20)}..."`, 'check-circle');
+                    }, 800);
+                } else {
+                    setHint('Type something to search', 'exclamation-circle');
+                    browserInput.focus();
                 }
-                // reset theme
-                themeOptions.forEach(o => o.classList.remove('active'));
-                themeOptions[0].classList.add('active');
-                customizeToggle.style.borderColor = 'rgba(255,255,255,0.08)';
-                customizeToggle.style.color = 'rgba(255,255,255,0.8)';
-                // reset widgets style
-                document.querySelectorAll('.widget').forEach(w => {
-                    w.style.transform = '';
-                    w.style.boxShadow = '';
-                    w.style.transition = '';
-                });
-                navHint.innerHTML = `<i class="fas fa-rotate-left"></i> Customization reset`;
             });
 
-            // ---------- Admin modal logic ----------
-            adminAccessBtn.addEventListener('click', () => {
+            browserInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    browserSearchBtn.click();
+                }
+            });
+
+            browserRefreshBtn.addEventListener('click', () => {
+                setHint('Page refreshed', 'rotate-right');
+                browserInput.value = '';
+                browserInput.placeholder = 'Search with DuckDuckGo or enter URL...';
+            });
+
+            // ---------- ADMIN ----------
+            adminDockBtn.addEventListener('click', () => {
                 if (isAdmin) {
-                    // If already admin, just show hint
-                    navHint.innerHTML = `<i class="fas fa-check-circle" style="color:#27c93f;"></i> Already admin mode`;
+                    setHint('Already in admin mode', 'check-circle');
                     return;
                 }
                 adminModal.classList.add('active');
                 adminPassword.focus();
+                adminError.style.display = 'none';
             });
 
             adminCancel.addEventListener('click', () => {
@@ -1007,16 +1271,16 @@
             });
 
             adminSubmit.addEventListener('click', () => {
-                const entered = adminPassword.value;
-                if (entered === ADMIN_PASSWORD) {
+                if (adminPassword.value === ADMIN_PASSWORD) {
                     isAdmin = true;
-                    adminBadge.classList.add('visible');
+                    adminIndicator.classList.add('visible');
                     adminModal.classList.remove('active');
                     adminPassword.value = '';
                     adminError.style.display = 'none';
-                    navHint.innerHTML = `<i class="fas fa-unlock" style="color:#6c6cff;"></i> Admin mode activated — customization unlocked`;
-                    // enable customization visually
-                    customizeToggle.style.borderColor = 'rgba(108,108,255,0.6)';
+                    setHint('Admin mode activated — customization unlocked', 'unlock');
+                    adminDockBtn.style.background = 'rgba(108,108,255,0.35)';
+                    adminDockBtn.style.color = '#fff';
+                    adminDockBtn.style.borderColor = 'rgba(108,108,255,0.7)';
                 } else {
                     adminError.style.display = 'block';
                     adminPassword.value = '';
@@ -1024,89 +1288,27 @@
                 }
             });
 
-            // close modal on ESC
-            window.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape' && adminModal.classList.contains('active')) {
-                    adminModal.classList.remove('active');
-                    adminPassword.value = '';
-                    adminError.style.display = 'none';
-                }
+            // allow Enter in password field
+            adminPassword.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') adminSubmit.click();
             });
 
-            // ---------- Reactive URL bar simulation ----------
-            urlInput.addEventListener('focus', () => {
-                navHint.innerHTML = `<i class="fas fa-pen"></i> Type a URL or search term`;
-            });
-            urlInput.addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') {
-                    const val = urlInput.value.trim();
-                    if (val.length > 0) {
-                        navHint.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Navigating to ${val.substring(0, 30)}${val.length > 30 ? '…' : ''}`;
-                        // simulate page load reactivity
-                        setTimeout(() => {
-                            navHint.innerHTML = `<i class="fas fa-check-circle" style="color:#27c93f;"></i> Loaded ${val.substring(0, 20)}${val.length > 20 ? '…' : ''}`;
-                            // update active tab title
-                            const activeTab = document.querySelector('.tab.active');
-                            if (activeTab) {
-                                const tabText = activeTab.childNodes[2]; // text node
-                                if (tabText && tabText.nodeType === 3) {
-                                    // subtle change
-                                } else {
-                                    // fallback
-                                }
-                            }
-                        }, 800);
-                    }
-                }
-            });
-
-            // ---------- sidebar reactive selection ----------
-            sidebarIcons.forEach(icon => {
-                icon.addEventListener('click', () => {
-                    sidebarIcons.forEach(i => i.classList.remove('active'));
-                    icon.classList.add('active');
-                    const view = icon.dataset.view || 'home';
-                    navHint.innerHTML = `<i class="fas fa-layer-group"></i> Switched to ${view} view`;
-                });
-            });
-
-            // ---------- initial hint, after launch ----------
+            // ---------- INITIAL HINTS ----------
             setTimeout(() => {
-                navHint.innerHTML = `<i class="fas fa-hand-pointer"></i> Try customize or click admin shield`;
-            }, 3200);
-
-            // ---------- extra: simulate reactive window resize ----------
-            window.addEventListener('resize', () => {
-                // just a subtle reactive hint (no heavy logic)
-                navHint.innerHTML = `<i class="fas fa-arrows-alt"></i> Viewport updated · reactive`;
-            });
-
-            // ---------- Launch overlay click to dismiss early (optional) ----------
-            launchOverlay.addEventListener('click', () => {
-                launchOverlay.style.display = 'none';
-            });
-
-            // ---------- fix: ensure overlay hidden after animation even if user clicks ----------
-            setTimeout(() => {
-                if (launchOverlay.style.display !== 'none') {
-                    launchOverlay.style.display = 'none';
-                }
+                setHint('Welcome to AGRO OS · Double-click apps to open', 'hand-pointer');
             }, 3400);
 
-            // GitHub repo link simulation (click on github tab)
-            document.querySelectorAll('.tab')[1]?.addEventListener('click', (e) => {
-                if (e.target.closest('.close-tab')) return;
-                urlInput.value = 'https://github.com/novabrowser';
-                navHint.innerHTML = `<i class="fab fa-github"></i> GitHub repository opened`;
+            // ---------- reactive clock + battery already set ----------
+            // extra: live battery percentage update on click (just for fun)
+            document.querySelector('.battery-indicator').addEventListener('click', () => {
+                updateBattery(Math.floor(Math.random() * 40) + 60);
+                setHint('Battery updated (simulated)', 'battery-full');
             });
 
-            // initialize first tab active states and close handlers
-            document.querySelectorAll('.tab').forEach(tab => {
-                tab.addEventListener('click', (e) => {
-                    if (e.target.closest('.close-tab')) return;
-                    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-                    tab.classList.add('active');
-                });
+            // ---------- prevent accidental context menu on desktop ----------
+            document.querySelector('.desktop-surface').addEventListener('contextmenu', (e) => {
+                e.preventDefault();
+                setHint('AGRO OS · right-click disabled', 'ban');
             });
 
         })();
